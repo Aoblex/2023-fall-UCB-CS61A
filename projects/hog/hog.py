@@ -243,7 +243,6 @@ def is_always_roll(strategy, goal=GOAL):
             if strategy(score, opponent_score) != num_rolls_00:
                 return False
     return True
-    
     # END PROBLEM 7
 
 
@@ -260,6 +259,9 @@ def make_averaged(original_function, samples_count=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    def average_original_function(*args):
+        return sum([original_function(*args) for i in range(samples_count)]) / samples_count
+    return average_original_function
     # END PROBLEM 8
 
 

@@ -75,8 +75,12 @@ def count_cond(condition):
     >>> count_primes(20)   # 2, 3, 5, 7, 11, 13, 17, 19
     8
     """
-    "*** YOUR CODE HERE ***"
-
+    def total_count(N):
+        result = 0
+        for i in range(1, N + 1):
+            result += condition(N, i)
+        return result
+    return total_count
 
 def multiple(a, b):
     """Return the smallest number n that is a multiple of both a and b.

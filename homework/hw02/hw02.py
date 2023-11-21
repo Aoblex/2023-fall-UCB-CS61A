@@ -125,8 +125,12 @@ def funception(func1, begin):
     >>> g3(-1)   # increment(-3) * increment(-2) = -2 * -1 = 2
     2
     """
-    "*** YOUR CODE HERE ***"
-
+    def calc_product(end):
+        result = 1
+        for i in range(begin, end):
+            result *= func1(i)
+        return result
+    return calc_product 
 
 def mul_by_num(num):
     """Returns a function that takes one argument and returns num

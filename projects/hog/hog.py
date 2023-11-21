@@ -36,6 +36,7 @@ def roll_dice(num_rolls, dice=six_sided):
     # END PROBLEM 1
 
 
+
 def boar_brawl(player_score, opponent_score):
     """Return the points scored by rolling 0 dice according to Boar Brawl.
 
@@ -45,6 +46,12 @@ def boar_brawl(player_score, opponent_score):
     """
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    assert (type(player_score)==int) and (type(opponent_score)==int), "Scores must be integers."
+    assert (player_score >= 0) and (opponent_score >= 0), "Scores must be no less than 0."
+    player_ones_digit = player_score % 10
+    opponent_tens_digit = opponent_score // 10 % 10
+    digit_diff = abs(player_ones_digit - opponent_tens_digit)
+    return max(1, 3 * digit_diff)
     # END PROBLEM 2
 
 

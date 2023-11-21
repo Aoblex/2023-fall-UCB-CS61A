@@ -90,8 +90,11 @@ def multiple(a, b):
     >>> multiple(14, 21)
     42
     """
-    "*** YOUR CODE HERE ***"
-
+    def gcd(p, q):
+        """p >= q"""
+        return q if p % q == 0 else gcd(q, p % q)
+    if a < b: a, b = b, a
+    return a * b // gcd(a, b)
 
 
 def cycle(f1, f2, f3):

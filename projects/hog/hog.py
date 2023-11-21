@@ -346,7 +346,9 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN PROBLEM 12
-    return 6  # Remove this line once implemented.
+    default_rolls = 4 if score < opponent_score else 2
+    default_threshold = 10 if score < opponent_score else 5
+    return sus_strategy(score, opponent_score, default_threshold, default_rolls) 
     # END PROBLEM 12
 
 

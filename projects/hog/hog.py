@@ -22,6 +22,17 @@ def roll_dice(num_rolls, dice=six_sided):
     assert num_rolls > 0, 'Must roll at least once.'
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    sum_score = 0 # Sum of all outcomes.
+    sow_sad = False # Indicates whether 'Sow Sad' happened or not among all rolls.
+    for i in range(num_rolls):
+        outcome = dice() # Roll once.
+        sum_score += outcome
+        sow_sad = (sow_sad or (outcome == 1))
+    
+    if sow_sad:
+        return 1
+    else:
+        return sum_score
     # END PROBLEM 1
 
 

@@ -123,5 +123,13 @@ def cycle(f1, f2, f3):
     >>> do_two_cycles(1)
     19
     """
-    "*** YOUR CODE HERE ***"
-
+    funcs = [f1, f2, f3]
+    def cycle_func(n):
+        def evaluate_cycle_func(x):
+            result = x
+            for i in range(n):
+                current_func = funcs[i % len(funcs)]
+                result = current_func(result)
+            return result
+        return evaluate_cycle_func
+    return cycle_func

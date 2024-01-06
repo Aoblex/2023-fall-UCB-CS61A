@@ -13,7 +13,7 @@ def my_map(fn, seq):
     2023
     [None, None, None]
     """
-    return ______
+    return [fn(element) for element in seq]
 
 def my_filter(pred, seq):
     """Keeps elements in seq only if they satisfy pred.
@@ -31,7 +31,7 @@ def my_filter(pred, seq):
     >>> my_filter(lambda x: max(5, x) == 5, [1, 2, 3, 4, 5, 6, 7])
     [1, 2, 3, 4, 5]
     """
-    return ______
+    return [element for element in seq if pred(element)]
 
 def my_reduce(combiner, seq):
     """Combines elements in seq using combiner.
@@ -45,7 +45,11 @@ def my_reduce(combiner, seq):
     >>> my_reduce(lambda x, y: x + 2 * y, [1, 2, 3]) # (1 + 2 * 2) + 2 * 3
     11
     """
-    "*** YOUR CODE HERE ***"
+    total = seq[0]
+    for i in range(1, len(seq)):
+        total = combiner(total, seq[i])
+    return total
+
 
 def my_map_syntax_check():
     """Check that your two_of_three code consists of nothing but a return statement.
@@ -89,7 +93,10 @@ def double_eights(n):
     >>> check(LAB_SOURCE_FILE, 'double_eights', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if n == 0: return False
+    next_n, last_two_digits = n // 10, n % 100
+    if last_two_digits == 88: return True
+    return double_eights(next_n)
 
 
 def merge(lst1, lst2):
@@ -116,7 +123,19 @@ def merge(lst1, lst2):
     >>> check(LAB_SOURCE_FILE, 'merge', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if len(lst1) == 0: return lst2
+    if len(lst2) == 0: return lst1
+
+    current_element = None
+    if lst1[0] < lst2[0]:
+        current_element = lst1[0]
+        lst1 = lst1[1:]
+    else:
+        current_element = lst2[0]
+        lst2 = lst2[1:]
+    return [current_element] + merge(lst1, lst2)
+
+    return lst1 + lst2
 
 
 def summation(n, term):
@@ -137,7 +156,8 @@ def summation(n, term):
     True
     """
     assert n >= 1
-    "*** YOUR CODE HERE ***"
+    if n == 1: return term(n)
+    return term(n) + summation(n - 1, term)
 
 
 def count_palindromes(L):
@@ -147,5 +167,7 @@ def count_palindromes(L):
     >>> count_palindromes(("Acme", "Madam", "Pivot", "Pip"))
     2
     """
-    return ______
+    return my_reduce(lambda x, y: x + y, 
+                     my_map(lambda _: 1,
+                     my_filter(lambda word: word.lower() == word.lower()[::-1], L)))
 

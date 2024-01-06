@@ -30,7 +30,10 @@ def pick(paragraphs, select, k):
     ''
     """
     # BEGIN PROBLEM 1
-    "*** YOUR CODE HERE ***"
+    candidate_paragraphs = [paragraph for paragraph in paragraphs if select(paragraph)]
+    if k >= len(candidate_paragraphs):
+        return ""
+    return candidate_paragraphs[k]
     # END PROBLEM 1
 
 
@@ -49,7 +52,16 @@ def about(subject):
     """
     assert all([lower(x) == x for x in subject]), 'subjects should be lowercase.'
     # BEGIN PROBLEM 2
-    "*** YOUR CODE HERE ***"
+    def about_subject(paragraph: str):
+        """"""
+        lower_paragraph = lower(paragraph)
+        no_punc_paragraph = remove_punctuation(lower_paragraph)
+        words = split(no_punc_paragraph)
+        for sub in subject:
+            if sub in words:
+                return True
+        return False
+    return about_subject
     # END PROBLEM 2
 
 
@@ -79,7 +91,20 @@ def accuracy(typed, source):
     typed_words = split(typed)
     source_words = split(source)
     # BEGIN PROBLEM 3
-    "*** YOUR CODE HERE ***"
+    if len(source_words) == 0: # source_words is empty.
+        if len(typed_words) == 0:
+            return 100.0
+        else:
+            return 0.0
+    else: # source_words is not empty
+        if len(typed_words) == 0:
+            return 0.0
+        else:
+            correct_count = 0
+            for i in range(min(len(typed_words), len(source_words))):
+                if typed_words[i] == source_words[i]:
+                    correct_count += 1
+            return correct_count / len(typed_words) * 100
     # END PROBLEM 3
 
 
@@ -97,7 +122,10 @@ def wpm(typed, elapsed):
     """
     assert elapsed > 0, 'Elapsed time must be positive'
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    words_count = len(typed) / 5
+    elapsed_minutes = elapsed / 60
+    wpm = words_count / elapsed_minutes
+    return wpm
     # END PROBLEM 4
 
 

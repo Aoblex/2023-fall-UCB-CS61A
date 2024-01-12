@@ -286,7 +286,16 @@ def report_progress(typed, source, user_id, upload):
     0.2
     """
     # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+    correct_count = 0
+    for i in range(min(len(typed), len(source))):
+        if typed[i] == source[i]:
+            correct_count += 1
+        else:
+            break
+    progress = correct_count / len(source)
+    upload_dict = {'id': user_id, 'progress': progress}
+    upload(upload_dict)
+    return progress
     # END PROBLEM 8
 
 

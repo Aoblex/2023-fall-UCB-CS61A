@@ -344,7 +344,13 @@ def fastest_words(match):
     player_indices = range(len(get_all_times(match)))  # contains an *index* for each player
     word_indices = range(len(get_all_words(match)))    # contains an *index* for each word
     # BEGIN PROBLEM 10
-    "*** YOUR CODE HERE ***"
+    fastest_words_per_player = [[] for i in player_indices]
+    for word_index in word_indices:
+        word_speeds = [(player_index, get_all_times(match)[player_index][word_index])
+                       for player_index in player_indices]
+        best_player_id = min(word_speeds, key=lambda player: (player[1], player[0]))[0]
+        fastest_words_per_player[best_player_id].append(get_word(match, word_index))
+    return fastest_words_per_player
     # END PROBLEM 10
 
 

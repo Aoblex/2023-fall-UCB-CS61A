@@ -1,7 +1,7 @@
 HW_SOURCE_FILE=__file__
 
 
-def insert_items(s, before, after):
+def insert_items(s: list, before, after):
     """Insert after into s after each occurrence of before and then return s.
 
     >>> test_s = [1, 5, 8, 5, 2, 3]
@@ -26,7 +26,13 @@ def insert_items(s, before, after):
     >>> large_s3 is large_s
     True
     """
-    "*** YOUR CODE HERE ***"
+    current_index = 0
+    while current_index < len(s):
+        if s[current_index] == before:
+            current_index += 1
+            s.insert(current_index, after)
+        current_index +=1
+    return s
 
 
 def count_occurrences(t, n, x):
@@ -50,7 +56,7 @@ def count_occurrences(t, n, x):
     >>> count_occurrences(s2, 6, 6)
     2
     """
-    "*** YOUR CODE HERE ***"
+    return sum([(x == next(t)) for _ in range(n)])
 
 
 def repeated(t, k):
@@ -73,7 +79,14 @@ def repeated(t, k):
     2
     """
     assert k > 1
-    "*** YOUR CODE HERE ***"
+    current_element = next(t)
+    element_count = 1
+    while element_count < k:
+        previous_element = current_element
+        current_element = next(t)
+        element_count = (element_count + 1) if (current_element == previous_element) else 1
+    return current_element 
+
 
 
 def partial_reverse(s, start):
@@ -88,5 +101,5 @@ def partial_reverse(s, start):
     >>> a
     [1, 2, 7, 6, 5, 3, 4]
     """
-    "*** YOUR CODE HERE ***"
+    s[start:] = list(reversed(s[start:]))
 

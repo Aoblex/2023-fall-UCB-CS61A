@@ -15,7 +15,14 @@ def berry_finder(t):
     >>> berry_finder(t)
     True
     """
-    "*** YOUR CODE HERE ***"
+    t_label = label(t)
+    berry_found = False
+
+    berry_found |= (t_label == 'berry')
+    for branch in branches(t):
+        berry_found |= berry_finder(branch)
+
+    return berry_found 
 
 
 def replace_loki_at_leaf(t, lokis_replacement):
@@ -47,7 +54,14 @@ def replace_loki_at_leaf(t, lokis_replacement):
     >>> laerad == yggdrasil # Make sure original tree is unmodified
     True
     """
-    "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        old_label = label(t)
+        new_label = lokis_replacement if old_label=='loki' else old_label
+        return tree(new_label)
+
+    return tree(label(t),
+                [replace_loki_at_leaf(branch, lokis_replacement)
+                 for branch in branches(t)])
 
 
 
@@ -146,7 +160,10 @@ def distance(city_a, city_b):
     >>> distance(city_c, city_d)
     5.0
     """
-    "*** YOUR CODE HERE ***"
+    city_a_lat, city_a_lon = get_lat(city_a), get_lon(city_a)
+    city_b_lat, city_b_lon = get_lat(city_b), get_lon(city_b)
+    return sqrt((city_a_lat - city_b_lat)**2 + (city_a_lon - city_b_lon) ** 2)
+
 
 def closer_city(lat, lon, city_a, city_b):
     """
@@ -163,7 +180,12 @@ def closer_city(lat, lon, city_a, city_b):
     >>> closer_city(41.29, 174.78, bucharest, vienna)
     'Bucharest'
     """
-    "*** YOUR CODE HERE ***"
+    destination = make_city('destination', lat, lon)
+    a_to_destination = distance(city_a, destination)
+    b_to_destination = distance(city_b, destination)
+    closer_city_item = city_a if a_to_destination < b_to_destination else city_b
+    closer_city_name = get_name(closer_city_item)
+    return closer_city_name
 
 def check_city_abstraction():
     """
@@ -249,7 +271,19 @@ def dejavu(t, n):
     >>> dejavu(my_tree, 5) # Sums of partial paths like 2 -> 3 don ’t count
     False
     """
-    "*** YOUR CODE HERE ***"
+    def incr_path_sums(path_sums, incr):
+        return [path_sum + incr for path_sum in path_sums]
+
+    def path_sums(t):
+        current_label = label(t)
+        if is_leaf(t):
+            return [current_label]
+        sub_path_sums = sum([path_sums(branch) for branch in branches(t)], start = [])
+        return incr_path_sums(sub_path_sums, current_label)
+
+    return (n in path_sums(t))
+
+            
 
 
 def hailstone_tree(n, h):
@@ -270,11 +304,11 @@ def hailstone_tree(n, h):
         5
           10
     """
-    if _________________________________:
-        return _________________________________
-    branches = _________________________________
-    if ___________ and ___________ and ___________:
-        branches += _________________________________
+    if h == 0:
+        return tree(n)
+    branches = [hailstone_tree(n*2, h-1)]
+    if n != 4 and (n-1) % 3 == 0 and (((n-1) // 3) & 1):
+        branches += [hailstone_tree((n-1)//3, h-1)]
     return tree(n, branches)
 
 

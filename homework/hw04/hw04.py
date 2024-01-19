@@ -1,12 +1,13 @@
-def filter(condition, lst):
+def filter(condition, lst: list):
     """Filters lst with condition using mutation.
     >>> original_list = [5, -1, 2, 0]
     >>> filter(lambda x: x % 2 == 0, original_list)
     >>> original_list
     [2, 0]
     """
-    "*** YOUR CODE HERE ***"
-
+    filtered_lst = [element for element in lst if condition(element)]
+    lst.clear()
+    lst.extend(filtered_lst)
 
 def deep_map_mut(func, lst):
     """Deeply maps a function over a list, replacing each item
@@ -32,7 +33,12 @@ def deep_map_mut(func, lst):
     >>> s3 is s2[1]
     True
     """
-    "*** YOUR CODE HERE ***"
+    for i in range(len(lst)):
+        if isinstance(lst[i], int):
+            lst[i] = func(lst[i])
+        else:
+            deep_map_mut(func,lst[i])
+
 
 
 HW_SOURCE_FILE=__file__
@@ -47,7 +53,14 @@ def max_path_sum(t):
     >>> max_path_sum(t2) # 5, 2, 10
     17
     """
-    "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return label(t)
+    current_max_path_sum = 0
+    current_label = label(t)
+    for branch in branches(t):
+        current_max_path_sum = max(current_max_path_sum,
+                                   current_label + max_path_sum(branch)) 
+    return current_max_path_sum
 
 
 HW_SOURCE_FILE=__file__
@@ -84,8 +97,17 @@ def has_path(t, word):
     False
     """
     assert len(word) > 0, 'no path for empty word.'
-    "*** YOUR CODE HERE ***"
-
+    
+    current_label = label(t)
+    if current_label != word[0]:
+        return False
+    else:
+        if len(word) == 1:
+            return True
+        word_match = False    
+        for branch in branches(t):
+            word_match |= has_path(branch, word[1:])
+        return word_match
 
 
 # Tree ADT
